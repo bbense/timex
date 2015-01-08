@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Overview</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a></div>
+
+      <h1>timex v0.13.2</h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#modules_summary">Modules</a></li>
+        
+        
+          <li><a href="#exceptions_summary">Exceptions</a></li>
+        
+        
+          <li><a href="#protocols_summary">Protocols</a></li>
+        
+      </ul>
+
+      
+        <h2 id="modules_summary">Modules summary <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Timex.html">Timex</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Date.html">Timex.Date</a></td>
+  
+    <td class="summary_synopsis"><p>Module for working with dates</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.DateFormat.html">Timex.DateFormat</a></td>
+  
+    <td class="summary_synopsis"><p>Date formatting and parsing</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.DateFormat.Formats.html">Timex.DateFormat.Formats</a></td>
+  
+    <td class="summary_synopsis"><p>This module defines all known (by timex) common date/time formats, in macro form</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.DateFormat.Formatters.DefaultFormatter.html">Timex.DateFormat.Formatters.DefaultFormatter</a></td>
+  
+    <td class="summary_synopsis"><p>Date formatting language used by default by the <code class="inline">DateFormat</code> module</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.DateFormat.Formatters.Formatter.html">Timex.DateFormat.Formatters.Formatter</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.DateFormat.Formatters.StrftimeFormatter.html">Timex.DateFormat.Formatters.StrftimeFormatter</a></td>
+  
+    <td class="summary_synopsis"><p>Date formatting language defined by the <code class="inline">strftime</code> function from the Standard
+C Library</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.DateTime.html">Timex.DateTime</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.DateFormat.DefaultParser.html">Timex.Parsers.DateFormat.DefaultParser</a></td>
+  
+    <td class="summary_synopsis"><p>This module is responsible for parsing date strings using
+the default timex formatting syntax</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.DateFormat.Directive.html">Timex.Parsers.DateFormat.Directive</a></td>
+  
+    <td class="summary_synopsis"><p>This module defines parsing directives for all date/time
+tokens timex knows about. It is composed of a Directive struct, 
+containing the rules for parsing a given token, and a <a href="#get/1"><code class="inline">get/1</code></a> 
+function, which fetches a directive for a given token value, i.e. <code class="inline">:year4</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.DateFormat.Parser.html">Timex.Parsers.DateFormat.Parser</a></td>
+  
+    <td class="summary_synopsis"><p>This is the base plugin behavior for all Timex date/time string parsers</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.DateFormat.ParserState.html">Timex.Parsers.DateFormat.ParserState</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.DateFormat.StrftimeParser.html">Timex.Parsers.DateFormat.StrftimeParser</a></td>
+  
+    <td class="summary_synopsis"><p>This module is responsible for parsing date strings using
+the strftime formatting syntax</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.DateFormat.Tokenizers.Default.html">Timex.Parsers.DateFormat.Tokenizers.Default</a></td>
+  
+    <td class="summary_synopsis"><p>Responsible for tokenizing date/time format strings
+which use the Default formatter</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.DateFormat.Tokenizers.Strftime.html">Timex.Parsers.DateFormat.Tokenizers.Strftime</a></td>
+  
+    <td class="summary_synopsis"><p>Responsible for tokenizing date/time format strings
+which use the strftime formatter</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.ZoneInfo.html">Timex.Parsers.ZoneInfo</a></td>
+  
+    <td class="summary_synopsis"><p>This module is responsible for parsing binary zoneinfo files,
+such as those found in /usr/local/zoneinfo</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.ZoneInfo.Zone.html">Timex.Parsers.ZoneInfo.Zone</a></td>
+  
+    <td class="summary_synopsis"><p>Represents the data retreived from a binary tzfile.
+For details on the tzfile format, see:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Time.html">Timex.Time</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.TimeFormatter.html">Timex.TimeFormatter</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Timezone.html">Timex.Timezone</a></td>
+  
+    <td class="summary_synopsis"><p>Contains all the logic around conversion, manipulation,
+and comparison of time zones</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Timezone.Database.html">Timex.Timezone.Database</a></td>
+  
+    <td class="summary_synopsis"><p>This module provides access to the database of timezones</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Timezone.Dst.html">Timex.Timezone.Dst</a></td>
+  
+    <td class="summary_synopsis"><p>Rules for determining if a datetime falls within a daylight savings period</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Timezone.Local.html">Timex.Timezone.Local</a></td>
+  
+    <td class="summary_synopsis"><p>Contains the logic and parser for extracting local timezone configuration</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.TimezoneInfo.html">Timex.TimezoneInfo</a></td>
+  
+    <td class="summary_synopsis"><p>Complete definition of a time zone, including all name
+variations, offsets, and daylight savings time rules if
+they apply</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <h2 id="exceptions_summary">Exceptions summary <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Timex.DateFormat.FormatError.html">Timex.DateFormat.FormatError</a></td>
+  
+    <td class="summary_synopsis"><p>Used for errors encountered during date formatting</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="Timex.Parsers.ParseError.html">Timex.Parsers.ParseError</a></td>
+  
+    <td class="summary_synopsis"><p>Used for errors encountered during date parsing</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <h2 id="protocols_summary">Protocols summary <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="Timex.Date.Convert.html">Timex.Date.Convert</a></td>
+  
+</tr>
+
+        </table>
+      
+    </section>
+  </body>
+</html>

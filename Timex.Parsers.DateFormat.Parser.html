@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.Parsers.DateFormat.Parser</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; Parsers &rarr; DateFormat &rarr; <a href="Timex.Parsers.DateFormat.Parser.html">Parser</a></div>
+      <h1>
+        Timex.Parsers.DateFormat.Parser
+        
+          <small>behaviour</small>
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+          <li><a href="#callbacks_details">Callbacks</a></li>
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>This is the base plugin behavior for all Timex date/time string parsers.</p>
+
+        </section>
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#parse!/3">parse!(date_string, format_string, parser \\ Timex.Parsers.DateFormat.DefaultParser)</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <a href="#parse/2"><code class="inline">parse/2</code></a> and <a href="#parse/3"><code class="inline">parse/3</code></a>, but raises on error</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#parse/2">parse(date_string, format_string)</a></td>
+  
+    <td class="summary_synopsis"><p>Parses a date/time string using the default parser</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#parse/3">parse(date_string, format_string, parser)</a></td>
+  
+    <td class="summary_synopsis"><p>Parses a date/time string using the provided parser. Must implement the
+<code class="inline">Timex.Parsers.Parser</code> behaviour</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#valid_length?/3">valid_length?(error, token, len)</a></td>
+  
+    <td class="summary_synopsis"><p>Given a string value (as a charlist), a token name, and a length specification,
+return a boolean indicating the validity of the string length of the provided value</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#valid_value?/3">valid_value?(str, token, validator)</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the value against a validator, the validator can
+be false, an atom representing a Date.* function to be called,
+a function taking a single string parameter, or a regex</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#within_bounds?/4">within_bounds?(str, token, min, max)</a></td>
+  
+    <td class="summary_synopsis"><p>Validate that a numeric value is within the valid range, if
+applicable. If not return an appropriate error</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="parse/2">
+    <span class="signature"><strong>parse(date_string, format_string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#parse/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>parse(binary, binary) :: {:ok, %Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Parses a date/time string using the default parser.</p>
+<h2>Examples</h2>
+<p>  iex&gt; Elixir.Timex.Parsers.DateFormat.Parser.parse(“2014-07-29T00:20:41.196Z”, “{ISOz}”)
+  %Date{year: 2014, month: 7, day: 29, hour: 0, minute: 20, second: 41, ms: 196, tz: %Timezone{name: “CST”}}</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="parse/3">
+    <span class="signature"><strong>parse(date_string, format_string, parser)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#parse/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>parse(binary, binary, Timex.Parsers.DateFormat.Parser) :: {:ok, %Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Parses a date/time string using the provided parser. Must implement the
+<code class="inline">Timex.Parsers.Parser</code> behaviour.</p>
+<h2>Examples</h2>
+<p>  iex&gt; Elixir.Timex.Parsers.DateFormat.Parser.parse(“2014-07-29T00:30:41.196Z”, “{ISOz}”, Timex.Parsers.DefaultParser)
+  %Date{year: 2014, month: 7, day: 29, hour: 0, minute: 20, second: 41, ms: 196, tz: %Timezone{name: “CST”}}</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="parse!/3">
+    <span class="signature"><strong>parse!(date_string, format_string, parser \\ Timex.Parsers.DateFormat.DefaultParser)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#parse!/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>parse!(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, Timex.Parsers.DateFormat.Parser | nil) :: %Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term} | no_return</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Same as <a href="#parse/2"><code class="inline">parse/2</code></a> and <a href="#parse/3"><code class="inline">parse/3</code></a>, but raises on error.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="valid_length?/3">
+    <span class="signature"><strong>valid_length?(error, token, len)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#valid_length?/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Given a string value (as a charlist), a token name, and a length specification,
+return a boolean indicating the validity of the string length of the provided value.</p>
+<h2>Example</h2>
+<p>  valid_length?(‘Mar’, :mshort, 3..4) #=&gt; true</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="valid_value?/3">
+    <span class="signature"><strong>valid_value?(str, token, validator)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#valid_value?/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Validates the value against a validator, the validator can
+be false, an atom representing a Date.* function to be called,
+a function taking a single string parameter, or a regex.</p>
+<h2>Example</h2>
+<p>  valid_value?(‘+0200’, :zname, ~r/^[-+]{4}$/) #=&gt; true</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="within_bounds?/4">
+    <span class="signature"><strong>within_bounds?(str, token, min, max)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#within_bounds?/4" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Validate that a numeric value is within the valid range, if
+applicable. If not return an appropriate error.</p>
+<h2>Example</h2>
+<p>  within_bounds?(“61”, :min, 0, 59) #=&gt; false</p>
+
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+        <section id="callbacks_details" class="details_list">
+          <h2>Callbacks</h2>
+          <section class="detail">
+  <div class="detail_header" id="c:parse_directive/2">
+    <span class="signature"><strong>parse_directive/2</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(callback)</span>
+      <a href="#c:parse_directive/2" class="detail_link" title="Link to this callback">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>parse_directive(date :: binary, directive :: %Timex.Parsers.DateFormat.Directive{format: term, len: term, match: term, max: term, min: term, optional: term, pad: term, pad_type: term, raw: term, token: term, type: term, validate: term}) :: {token :: atom, {value :: term, date_rest :: binary} | {:error, term}}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="c:tokenize/1">
+    <span class="signature"><strong>tokenize/1</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(callback)</span>
+      <a href="#c:tokenize/1" class="detail_link" title="Link to this callback">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>tokenize(format_string :: binary) :: [%Timex.Parsers.DateFormat.Directive{format: term, len: term, match: term, max: term, min: term, optional: term, pad: term, pad_type: term, raw: term, token: term, type: term, validate: term}] | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+
+        </section>
+      
+    </section>
+  </body>
+</html>

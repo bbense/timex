@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.TimezoneInfo</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.TimezoneInfo.html">TimezoneInfo</a></div>
+      <h1>
+        Timex.TimezoneInfo
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+        
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Complete definition of a time zone, including all name
+variations, offsets, and daylight savings time rules if
+they apply.</p>
+<p>Notes:</p>
+<ul>
+<li><code class="inline">full_name</code> must be unique
+</li>
+<li><code class="inline">standard_name</code>, <code class="inline">standard_abbreviation</code>: Name and abbreviation of timezone before daylight savings time
+</li>
+<li><code class="inline">dst_name</code>, <code class="inline">dst_abbreviation</code>:           Name and abbreviation of timezone after daylight savings time
+</li>
+<li><code class="inline">gmt_offset_std</code>:                         Integer, GMT offset in minutes, outside of daylight savings time
+</li>
+<li><code class="inline">gmt_offset_dst</code>:                         Integer, GMT offset in minutes, during daylight savings time
+</li>
+<li><p><code class="inline">dst_start_day</code>, <code class="inline">dst_end_day</code>:           Can be defined as either :none or {week_of_year, day_of_week, month_of_year} </p>
+<pre><code>When not :none, represents the daylight savings time transition rule.</code></pre>
+<p>Spec:</p>
+</li>
+<li>week_of_year:  integer() | :last, Example: 1 = first week, 2 = second week, N = nth week, etc
+</li>
+<li>day_of_week:   atom(), :sun, :mon, :tue, etc
+</li>
+<li>month_of_year: atom(), :jan, :feb, :mar, etc
+</li>
+<li><code class="inline">dst_start_time</code>, <code class="inline">dst_end_time</code>:         Defined as {hour, min}, represents the time of the daylight savings time transition.
+Spec:
+</li>
+<li>hour = integer(), 0..23
+</li>
+<li>min  = integer(), 0..59
+</li>
+</ul>
+
+        </section>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>

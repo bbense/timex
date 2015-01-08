@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.DateFormat.Formatters.DefaultFormatter</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.DateFormat.html">DateFormat</a> &rarr; Formatters &rarr; <a href="Timex.DateFormat.Formatters.DefaultFormatter.html">DefaultFormatter</a></div>
+      <h1>
+        Timex.DateFormat.Formatters.DefaultFormatter
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Date formatting language used by default by the <code class="inline">DateFormat</code> module.</p>
+<p>This is a novel formatting language introduced with <code class="inline">DateFormat</code>. Its main
+advantage is simplicity and usage of mnemonics that are easy to memorize.</p>
+<h2>Directive format</h2>
+<p>A directive is an optional <em>padding specifier</em> followed by a <em>mnemonic</em>, both
+enclosed in braces (<code class="inline">{</code> and <code class="inline">}</code>):</p>
+<pre><code>{&lt;padding&gt;&lt;mnemonic&gt;}</code></pre>
+<p>Supported padding specifiers:</p>
+<ul>
+<li><code class="inline">0</code> — pads the number with zeros. Applicable to mnemonics that produce numerical result.
+</li>
+<li><code class="inline">_</code> — pads the number with spaces. Applicable to mnemonics that produce numerical result.
+</li>
+</ul>
+<p>When padding specifier is omitted, numbers will not be padded.</p>
+<h2>List of all directives</h2>
+<h3>Years and centuries</h3>
+<ul>
+<li><code class="inline">{YYYY}</code>    - full year number (0..9999)
+</li>
+<li><code class="inline">{YY}</code>      - the last two digits of the year number (0.99)
+</li>
+<li><code class="inline">{C}</code>       - century number (0..99)
+</li>
+<li><code class="inline">{WYYYY}</code>   - year number corresponding to the date’s ISO week (0..9999)
+</li>
+<li><code class="inline">{WYY}</code>     - year number (2 digits) corresponding to the date’s ISO week (0.99)
+</li>
+</ul>
+<h3>Months</h3>
+<ul>
+<li><code class="inline">{M}</code>       - month number (1..12)
+</li>
+<li><code class="inline">{Mshort}</code>  - abbreviated month name (Jan..Dec, no padding)
+</li>
+<li><code class="inline">{Mfull}</code>   - full month name (January..December, no padding)
+</li>
+</ul>
+<h3>Days and weekdays</h3>
+<ul>
+<li><code class="inline">{D}</code>       - day number (1..31)
+</li>
+<li><code class="inline">{Dord}</code>    - ordinal day of the year (1..366)
+</li>
+<li><code class="inline">{WDmon}</code>   - weekday, Monday first (1..7, no padding)
+</li>
+<li><code class="inline">{WDsun}</code>   - weekday, Sunday first (0..6, no padding)
+</li>
+<li><code class="inline">{WDshort}</code> - abbreviated weekday name (Mon..Sun, no padding)
+</li>
+<li><code class="inline">{WDfull}</code>  - full weekday name (Monday..Sunday, no padding)
+</li>
+</ul>
+<h3>Weeks</h3>
+<ul>
+<li><code class="inline">{Wiso}</code>    - ISO week number (1..53)
+</li>
+<li><code class="inline">{Wmon}</code>    - week number of the year, Monday first (0..53)
+</li>
+<li><code class="inline">{Wsun}</code>    - week number of the year, Sunday first (0..53)
+</li>
+</ul>
+<h3>Time</h3>
+<ul>
+<li><code class="inline">{h24}</code>     - hour of the day (0..23)
+</li>
+<li><code class="inline">{h12}</code>     - hour of the day (1..12)
+</li>
+<li><code class="inline">{m}</code>       - minutes of the hour (0..59)
+</li>
+<li><code class="inline">{s}</code>       - seconds of the minute (0..60)
+</li>
+<li><code class="inline">{s-epoch}</code> - number of seconds since UNIX epoch
+</li>
+<li><code class="inline">{am}</code>      - lowercase am or pm (no padding)
+</li>
+<li><code class="inline">{AM}</code>      - uppercase AM or PM (no padding)
+</li>
+</ul>
+<h3>Time zones</h3>
+<ul>
+<li><code class="inline">{Zname}</code>   - time zone name, e.g. <code class="inline">UTC</code> (no padding)
+</li>
+<li><code class="inline">{Z}</code>       - time zone offset in the form <code class="inline">+0230</code> (no padding)
+</li>
+<li><code class="inline">{Z:}</code>      - time zone offset in the form <code class="inline">-07:30</code> (no padding)
+</li>
+<li><code class="inline">{Z::}</code>     - time zone offset in the form <code class="inline">-07:30:00</code> (no padding)
+</li>
+</ul>
+<h3>Compound directives</h3>
+<p>These are shortcut directives corresponding to parts of the ISO 8601
+specification. The benefit of using these over manually constructed ISO
+formats is that these directives convert the date to UTC for you.</p>
+<ul>
+<li><p><code class="inline">{ISO}</code>         - <code class="inline">&lt;date&gt;T&lt;time&gt;&lt;offset&gt;</code>. Full date and time</p>
+<pre><code>specification (e.g. `2007-08-13T16:48:01 +0300`)</code></pre>
+</li>
+<li><p><code class="inline">{ISOz}</code>        - <code class="inline">&lt;date&gt;T&lt;time&gt;Z</code>. Full date and time in UTC (e.g.</p>
+<pre><code>`2007-08-13T13:48:01Z`)</code></pre>
+</li>
+<li><p><code class="inline">{ISOdate}</code>     - <code class="inline">YYYY-MM-DD</code>. That is, 4-digit year number, followed by</p>
+<pre><code>2-digit month and day numbers (e.g. `2007-08-13`)</code></pre>
+</li>
+<li><p><code class="inline">{ISOtime}</code>     - <code class="inline">hh:mm:ss</code>. That is, 2-digit hour, minute, and second,</p>
+<pre><code>separated by colons (e.g. `13:04:05`). Midnight is 00 hours.</code></pre>
+</li>
+<li><p><code class="inline">{ISOweek}</code>     - <code class="inline">YYYY-Www</code>. That is, ISO week-based year, followed by ISO</p>
+<pre><code>week number (e.g. `2007-W09`)</code></pre>
+</li>
+<li><p><code class="inline">{ISOweek-day}</code> - <code class="inline">YYYY-Www-D</code>. That is, an <code class="inline">{ISOweek}</code>, additionally</p>
+<pre><code>followed by weekday (e.g. `2007-W09-1`)</code></pre>
+</li>
+<li><p><code class="inline">{ISOord}</code>      - <code class="inline">YYYY-DDD</code>. That is, year number, followed by the ordinal</p>
+<pre><code>day number (e.g. `2007-113`)</code></pre>
+</li>
+</ul>
+<p>These directives provide support for miscellaneous common formats:</p>
+<ul>
+<li><code class="inline">{RFC822}</code>      - e.g. <code class="inline">Mon, 05 Jun 14 23:20:59 UT</code>
+</li>
+<li><code class="inline">{RFC822z}</code>     - e.g. <code class="inline">Mon, 05 Jun 14 23:20:59 Z</code>
+</li>
+<li><code class="inline">{RFC1123}</code>     - e.g. <code class="inline">Tue, 05 Mar 2013 23:25:19 GMT</code>
+</li>
+<li><code class="inline">{RFC1123z}</code>    - e.g. <code class="inline">Tue, 05 Mar 2013 23:25:19 +0200</code>
+</li>
+<li><code class="inline">{RFC3339}</code>     - e.g. <code class="inline">2013-03-05T23:25:19+02:00</code>
+</li>
+<li><code class="inline">{RFC3339z}</code>    - e.g. <code class="inline">2013-03-05T23:25:19Z</code>
+</li>
+<li><code class="inline">{ANSIC}</code>       - e.g. <code class="inline">Tue Mar  5 23:25:19 2013</code>
+</li>
+<li><code class="inline">{UNIX}</code>        - e.g. <code class="inline">Tue Mar  5 23:25:19 PST 2013</code>
+</li>
+<li><code class="inline">{kitchen}</code>     - e.g. <code class="inline">3:25PM</code>
+</li>
+</ul>
+
+        </section>
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#format!/2">format!(date, format_string)</a></td>
+  
+    <td class="summary_synopsis"><p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format!/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format!/2</code></a></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format/2">format(date, format_string)</a></td>
+  
+    <td class="summary_synopsis"><p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format/2</code></a></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format/3">format(date, format_string, tokenizer)</a></td>
+  
+    <td class="summary_synopsis"><p>If one wants to use the default formatting semantics with a different
+tokenizer, this is the way</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#tokenize/1">tokenize(format_string)</a></td>
+  
+    <td class="summary_synopsis"><p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#tokenize/1"><code class="inline">Timex.DateFormat.Formatters.Formatter.tokenize/1</code></a></p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="format/2">
+    <span class="signature"><strong>format(date, format_string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format(%Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: {:ok, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format/2</code></a>.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="format/3">
+    <span class="signature"><strong>format(date, format_string, tokenizer)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format(%Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, atom) :: {:ok, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>If one wants to use the default formatting semantics with a different
+tokenizer, this is the way.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="format!/2">
+    <span class="signature"><strong>format!(date, format_string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format!(%Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a> | no_return</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format!/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format!/2</code></a>.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="tokenize/1">
+    <span class="signature"><strong>tokenize(format_string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#tokenize/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>tokenize(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: {:ok, [%Timex.Parsers.DateFormat.Directive{format: term, len: term, match: term, max: term, min: term, optional: term, pad: term, pad_type: term, raw: term, token: term, type: term, validate: term}]} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#tokenize/1"><code class="inline">Timex.DateFormat.Formatters.Formatter.tokenize/1</code></a>.</p>
+
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>

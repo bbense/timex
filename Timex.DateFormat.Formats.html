@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.DateFormat.Formats</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.DateFormat.html">DateFormat</a> &rarr; <a href="Timex.DateFormat.Formats.html">Formats</a></div>
+      <h1>
+        Timex.DateFormat.Formats
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+        
+          <li><a href="#macros_details">Macros</a></li>
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>This module defines all known (by timex) common date/time formats, in macro form.</p>
+<p>Each format is returned as the following structure:</p>
+<p>  [tokenizer: <module this format string will be tokenized with (expects a tokenize/1 def)>,
+   format:    <format as a (binary) string value>]</p>
+<p>These formats are consumed by the datetime string parsers, by first tokenizing the chosen
+format, then parsing the datetime string using those tokens.</p>
+
+        </section>
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#ansic/0">ansic()</a></td>
+  
+    <td class="summary_synopsis"><p>ANSI C standard date/time format.
+Example: <code class="inline">Tue Mar  5 23:25:19 2013</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_8601/0">iso_8601()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO 8601 date/time format with timezone information.
+Example: <code class="inline">2007-08-13T16:48:01 +0300</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_8601z/0">iso_8601z()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO 8601 date/time format, assumes UTC/Zulu timezone.
+Example: <code class="inline">2007-08-13T13:48:01Z</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_date/0">iso_date()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO-standardized year/month/day format.
+Example: <code class="inline">2013-02-29</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_ordinal/0">iso_ordinal()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO year, followed by ISO ordinal day
+Example: <code class="inline">2007-113</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_time/0">iso_time()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO-standardized hour/minute/second format.
+Example: <code class="inline">23:05:45</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_week/0">iso_week()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO year, followed by ISO week number
+Example: <code class="inline">2007-W09</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_weekday/0">iso_weekday()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO year, followed by ISO week number, and ISO week day number
+Example: <code class="inline">2007-W09-1</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#kitchen/0">kitchen()</a></td>
+  
+    <td class="summary_synopsis"><p>Kitchen clock time format.
+Example: <code class="inline">3:25PM</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rfc_1123/0">rfc_1123()</a></td>
+  
+    <td class="summary_synopsis"><p>RFC 1123 date/time format with timezone information.
+Example: <code class="inline">Tue, 05 Mar 2013 23:25:19 GMT</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rfc_1123z/0">rfc_1123z()</a></td>
+  
+    <td class="summary_synopsis"><p>RFC 1123 date/time format, assumes UTC/Zulu timezone.
+Example: <code class="inline">Tue, 05 Mar 2013 23:25:19 +0200</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rfc_3339/0">rfc_3339()</a></td>
+  
+    <td class="summary_synopsis"><p>RFC 3339 date/time format with timezone information.
+Example: <code class="inline">2013-03-05T23:25:19+02:00</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rfc_3339z/0">rfc_3339z()</a></td>
+  
+    <td class="summary_synopsis"><p>RFC 3339 date/time format, assumes UTC/Zulu timezone.
+Example: <code class="inline">2013-03-05T23:25:19Z</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rfc_822/0">rfc_822()</a></td>
+  
+    <td class="summary_synopsis"><p>RFC 822 date/time format with timezone information.
+Examples: <code class="inline">Mon, 05 Jun 14 23:20:59 Y</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#rfc_822z/0">rfc_822z()</a></td>
+  
+    <td class="summary_synopsis"><p>Same as <code class="inline">rfc_822</code>, but locked to universal time</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#slashed_date/0">slashed_date()</a></td>
+  
+    <td class="summary_synopsis"><p>Month, day, and year, in slashed style.
+Example: <code class="inline">04/12/1987</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#strftime_clock/0">strftime_clock()</a></td>
+  
+    <td class="summary_synopsis"><p>Wall clock in strftime format.
+Example: <code class="inline">23:30</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#strftime_iso_date/0">strftime_iso_date()</a></td>
+  
+    <td class="summary_synopsis"><p>ISO date, in strftime format.
+Example: <code class="inline">1987-04-12</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#strftime_kitchen/0">strftime_kitchen()</a></td>
+  
+    <td class="summary_synopsis"><p>Kitchen clock in strftime format.
+Example: <code class="inline">4:30:01 PM</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#strftime_shortdate/0">strftime_shortdate()</a></td>
+  
+    <td class="summary_synopsis"><p>Friendly short date format. Uses spaces for padding on the day.
+Example: <code class="inline">5-Jan-2014</code></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#unix/0">unix()</a></td>
+  
+    <td class="summary_synopsis"><p>UNIX standard date/time format.
+Example: <code class="inline">Tue Mar  5 23:25:19 PST 2013</code></p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+
+      
+        <section id="macros_details" class="details_list">
+          <h2>Macros</h2>
+          <section class="detail">
+  <div class="detail_header" id="ansic/0">
+    <span class="signature"><strong>ansic()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#ansic/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ANSI C standard date/time format.
+Example: <code class="inline">Tue Mar  5 23:25:19 2013</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_8601/0">
+    <span class="signature"><strong>iso_8601()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#iso_8601/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO 8601 date/time format with timezone information.
+Example: <code class="inline">2007-08-13T16:48:01 +0300</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_8601z/0">
+    <span class="signature"><strong>iso_8601z()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#iso_8601z/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO 8601 date/time format, assumes UTC/Zulu timezone.
+Example: <code class="inline">2007-08-13T13:48:01Z</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_date/0">
+    <span class="signature"><strong>iso_date()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#iso_date/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO-standardized year/month/day format.
+Example: <code class="inline">2013-02-29</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_ordinal/0">
+    <span class="signature"><strong>iso_ordinal()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#iso_ordinal/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO year, followed by ISO ordinal day
+Example: <code class="inline">2007-113</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_time/0">
+    <span class="signature"><strong>iso_time()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#iso_time/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO-standardized hour/minute/second format.
+Example: <code class="inline">23:05:45</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_week/0">
+    <span class="signature"><strong>iso_week()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#iso_week/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO year, followed by ISO week number
+Example: <code class="inline">2007-W09</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_weekday/0">
+    <span class="signature"><strong>iso_weekday()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#iso_weekday/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO year, followed by ISO week number, and ISO week day number
+Example: <code class="inline">2007-W09-1</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="kitchen/0">
+    <span class="signature"><strong>kitchen()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#kitchen/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Kitchen clock time format.
+Example: <code class="inline">3:25PM</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="rfc_1123/0">
+    <span class="signature"><strong>rfc_1123()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#rfc_1123/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>RFC 1123 date/time format with timezone information.
+Example: <code class="inline">Tue, 05 Mar 2013 23:25:19 GMT</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="rfc_1123z/0">
+    <span class="signature"><strong>rfc_1123z()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#rfc_1123z/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>RFC 1123 date/time format, assumes UTC/Zulu timezone.
+Example: <code class="inline">Tue, 05 Mar 2013 23:25:19 +0200</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="rfc_3339/0">
+    <span class="signature"><strong>rfc_3339()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#rfc_3339/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>RFC 3339 date/time format with timezone information.
+Example: <code class="inline">2013-03-05T23:25:19+02:00</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="rfc_3339z/0">
+    <span class="signature"><strong>rfc_3339z()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#rfc_3339z/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>RFC 3339 date/time format, assumes UTC/Zulu timezone.
+Example: <code class="inline">2013-03-05T23:25:19Z</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="rfc_822/0">
+    <span class="signature"><strong>rfc_822()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#rfc_822/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>RFC 822 date/time format with timezone information.
+Examples: <code class="inline">Mon, 05 Jun 14 23:20:59 Y</code></p>
+<h2>From the specification (RE: timezones):</h2>
+<p>Time zone may be indicated in several ways.  “UT” is Univer-
+sal  Time  (formerly called “Greenwich Mean Time”); “GMT” is per-
+mitted as a reference to Universal Time.  The  military  standard
+uses  a  single  character for each zone.  “Z” is Universal Time.
+“A” indicates one hour earlier, and “M” indicates 12  hours  ear-
+lier;  “N”  is  one  hour  later, and “Y” is 12 hours later.  The
+letter “J” is not used.  The other remaining two forms are  taken
+from ANSI standard X3.51-1975.  One allows explicit indication of
+the amount of offset from UT; the other uses  common  3-character
+strings for indicating time zones in North America.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="rfc_822z/0">
+    <span class="signature"><strong>rfc_822z()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#rfc_822z/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Same as <code class="inline">rfc_822</code>, but locked to universal time.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="slashed_date/0">
+    <span class="signature"><strong>slashed_date()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#slashed_date/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Month, day, and year, in slashed style.
+Example: <code class="inline">04/12/1987</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="strftime_clock/0">
+    <span class="signature"><strong>strftime_clock()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#strftime_clock/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Wall clock in strftime format.
+Example: <code class="inline">23:30</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="strftime_iso_date/0">
+    <span class="signature"><strong>strftime_iso_date()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#strftime_iso_date/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>ISO date, in strftime format.
+Example: <code class="inline">1987-04-12</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="strftime_kitchen/0">
+    <span class="signature"><strong>strftime_kitchen()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#strftime_kitchen/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Kitchen clock in strftime format.
+Example: <code class="inline">4:30:01 PM</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="strftime_shortdate/0">
+    <span class="signature"><strong>strftime_shortdate()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#strftime_shortdate/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Friendly short date format. Uses spaces for padding on the day.
+Example: <code class="inline">5-Jan-2014</code></p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="unix/0">
+    <span class="signature"><strong>unix()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(macro)</span>
+      <a href="#unix/0" class="detail_link" title="Link to this macro">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>UNIX standard date/time format.
+Example: <code class="inline">Tue Mar  5 23:25:19 PST 2013</code></p>
+
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+    </section>
+  </body>
+</html>

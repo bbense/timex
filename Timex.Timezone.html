@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.Timezone</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.Timezone.html">Timezone</a></div>
+      <h1>
+        Timex.Timezone
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Contains all the logic around conversion, manipulation,
+and comparison of time zones.</p>
+
+        </section>
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#convert/2">convert(date, tz)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert a date to the given timezone</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#diff/2">diff(date, destination)</a></td>
+  
+    <td class="summary_synopsis"><p>Determine what offset is required to convert a date into a target timezone</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#get/1">get(tz)</a></td>
+  
+    <td class="summary_synopsis"><p>Get the TimezoneInfo object corresponding to the given name</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#local/0">local()</a></td>
+  
+    <td class="summary_synopsis"><p>Get’s the current local timezone configuration.
+You can provide a reference date to get the local timezone
+for a specific date, but the operation will not be cached
+lik getting the local timezone for the current date</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#local/1">local(date)</a></td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="convert/2">
+    <span class="signature"><strong>convert(date, tz)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#convert/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>convert(date :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, tz :: <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert a date to the given timezone.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="diff/2">
+    <span class="signature"><strong>diff(date, destination)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#diff/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>diff(date :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, tz :: <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a>) :: integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Determine what offset is required to convert a date into a target timezone</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="get/1">
+    <span class="signature"><strong>get(tz)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#get/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Get the TimezoneInfo object corresponding to the given name.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="local/0">
+    <span class="signature"><strong>local()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#local/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Get’s the current local timezone configuration.
+You can provide a reference date to get the local timezone
+for a specific date, but the operation will not be cached
+lik getting the local timezone for the current date</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="local/1">
+    <span class="signature"><strong>local(date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#local/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>

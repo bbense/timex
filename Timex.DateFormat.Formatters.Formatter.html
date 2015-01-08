@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.DateFormat.Formatters.Formatter</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.DateFormat.html">DateFormat</a> &rarr; Formatters &rarr; <a href="Timex.DateFormat.Formatters.Formatter.html">Formatter</a></div>
+      <h1>
+        Timex.DateFormat.Formatters.Formatter
+        
+          <small>behaviour</small>
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+          <li><a href="#callbacks_details">Callbacks</a></li>
+        
+      </ul>
+
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#format!/3">format!(date, format_string, formatter \\ Timex.DateFormat.Formatters.DefaultFormatter)</a></td>
+  
+    <td class="summary_synopsis"><p>Formats a DateTime struct as a string, using the provided format
+string and formatter. If a formatter is not provided, the formatter
+used is <a href="Timex.DateFormat.Formatters.DefaultFormatter.html"><code class="inline">Timex.DateFormat.Formatters.DefaultFormatter</code></a></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format/3">format(date, format_string, formatter \\ Timex.DateFormat.Formatters.DefaultFormatter)</a></td>
+  
+    <td class="summary_synopsis"><p>Formats a DateTime struct as a string, using the provided format
+string and formatter. If a formatter is not provided, the formatter
+used is <a href="Timex.DateFormat.Formatters.DefaultFormatter.html"><code class="inline">Timex.DateFormat.Formatters.DefaultFormatter</code></a></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format_token/2">format_token(token, date)</a></td>
+  
+    <td class="summary_synopsis"><p>Given a token (as found in <code class="inline">Timex.Parsers.Directive</code>), and a DateTime struct,
+produce a string representation of the token using values from the struct</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#validate/2">validate(format_string, formatter \\ Timex.DateFormat.Formatters.DefaultFormatter)</a></td>
+  
+    <td class="summary_synopsis"><p>Validates the provided format string, using the provided formatter,
+or if none is provided, the default formatter. Returns <code class="inline">:ok</code> when valid, 
+or <code class="inline">{:error, reason}</code> if not valid</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="format/3">
+    <span class="signature"><strong>format(date, format_string, formatter \\ Timex.DateFormat.Formatters.DefaultFormatter)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format(%Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, Timex.DateFormat.Formatters.Formatter | nil) :: {:ok, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Formats a DateTime struct as a string, using the provided format
+string and formatter. If a formatter is not provided, the formatter
+used is <a href="Timex.DateFormat.Formatters.DefaultFormatter.html"><code class="inline">Timex.DateFormat.Formatters.DefaultFormatter</code></a>.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="format!/3">
+    <span class="signature"><strong>format!(date, format_string, formatter \\ Timex.DateFormat.Formatters.DefaultFormatter)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format!/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format!(%Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, Timex.DateFormat.Formatters.Formatter | nil) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a> | no_return</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Formats a DateTime struct as a string, using the provided format
+string and formatter. If a formatter is not provided, the formatter
+used is <a href="Timex.DateFormat.Formatters.DefaultFormatter.html"><code class="inline">Timex.DateFormat.Formatters.DefaultFormatter</code></a>.</p>
+<p>If an error is encountered during formatting, <code class="inline">format!</code> will raise.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="format_token/2">
+    <span class="signature"><strong>format_token(token, date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format_token/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format_token(atom, %Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Given a token (as found in <code class="inline">Timex.Parsers.Directive</code>), and a DateTime struct,
+produce a string representation of the token using values from the struct.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="validate/2">
+    <span class="signature"><strong>validate(format_string, formatter \\ Timex.DateFormat.Formatters.DefaultFormatter)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#validate/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>validate(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>, Timex.DateFormat.Formatters.Formatter | nil) :: :ok | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Validates the provided format string, using the provided formatter,
+or if none is provided, the default formatter. Returns <code class="inline">:ok</code> when valid, 
+or <code class="inline">{:error, reason}</code> if not valid.</p>
+
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+        <section id="callbacks_details" class="details_list">
+          <h2>Callbacks</h2>
+          <section class="detail">
+  <div class="detail_header" id="c:format/2">
+    <span class="signature"><strong>format/2</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(callback)</span>
+      <a href="#c:format/2" class="detail_link" title="Link to this callback">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format(date :: %Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, format_string :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: {:ok, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="c:format!/2">
+    <span class="signature"><strong>format!/2</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(callback)</span>
+      <a href="#c:format!/2" class="detail_link" title="Link to this callback">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format!(date :: %Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, format_string :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a> | no_return</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="c:tokenize/1">
+    <span class="signature"><strong>tokenize/1</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(callback)</span>
+      <a href="#c:tokenize/1" class="detail_link" title="Link to this callback">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>tokenize(format_string :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: {:ok, [%Timex.Parsers.DateFormat.Directive{format: term, len: term, match: term, max: term, min: term, optional: term, pad: term, pad_type: term, raw: term, token: term, type: term, validate: term}]} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+
+        </section>
+      
+    </section>
+  </body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.Time</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.Time.html">Time</a></div>
+      <h1>
+        Timex.Time
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#abs/1">abs(arg1)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#add/2">add(arg1, arg2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#convert/2">convert(timestamp, type \\ :timestamp)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert timestamp in the form { megasecs, seconds, microsecs } to the
+specified time units</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#days/1">days(value)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#diff/3">diff(t1, t2, type \\ :timestamp)</a></td>
+  
+    <td class="summary_synopsis"><p>Time interval between two timestamps. If the first timestamp comes before the
+second one in time, the return value will be negative. Timestamp must be in format
+{ megasecs, seconds, microseconds }</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#elapsed/2">elapsed(timestamp, type \\ :timestamp)</a></td>
+  
+    <td class="summary_synopsis"><p>Time interval between timestamp and now. If timestamp is after now in time, the
+return value will be negative. Timestamp must be in format { megasecs, seconds,
+microseconds }</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#elapsed/3">elapsed(arg1, arg2, type)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#epoch/1">epoch(type \\ :timestamp)</a></td>
+  
+    <td class="summary_synopsis"><p>Return time interval since the first day of year 0 to Epoch</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from/2">from(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#hours/1">hours(value)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#invert/1">invert(arg1)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#measure/1">measure(fun)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#measure/2">measure(fun, args)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#measure/3">measure(module, fun, args)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#mins/1">mins(value)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#now/1">now(type \\ :timestamp)</a></td>
+  
+    <td class="summary_synopsis"><p>Time interval since Epoch</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#scale/2">scale(arg1, coef)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#secs/1">secs(value)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#sub/2">sub(arg1, arg2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_12hour_clock/1">to_12hour_clock(hour)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts an hour between 0..24 to {1..12, :am/:pm}</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_24hour_clock/2">to_24hour_clock(hour, am_or_pm)</a></td>
+  
+    <td class="summary_synopsis"><p>Converts an hour between 1..12 in either am or pm, to value between 0..24</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_days/1">to_days(timestamp)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_days/2">to_days(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_hours/1">to_hours(timestamp)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_hours/2">to_hours(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_mins/1">to_mins(timestamp)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_mins/2">to_mins(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_msecs/1">to_msecs(arg1)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_msecs/2">to_msecs(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_secs/1">to_secs(arg1)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_secs/2">to_secs(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_timestamp/2">to_timestamp(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_usecs/1">to_usecs(arg1)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_usecs/2">to_usecs(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_weeks/1">to_weeks(timestamp)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_weeks/2">to_weeks(value, atom2)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#weeks/1">weeks(value)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#zero/0">zero()</a></td>
+  
+    <td class="summary_synopsis"><p>Return a timestamp representing a time lapse of length 0</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="abs/1">
+    <span class="signature"><strong>abs(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#abs/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="add/2">
+    <span class="signature"><strong>add(arg1, arg2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#add/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="convert/2">
+    <span class="signature"><strong>convert(timestamp, type \\ :timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#convert/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Convert timestamp in the form { megasecs, seconds, microsecs } to the
+specified time units.</p>
+<p>Supported units: microseconds (:usec), milliseconds (:msec), seconds (:sec),
+minutes (:min), hours (:hour), days (:day), or weeks (:week).</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="days/1">
+    <span class="signature"><strong>days(value)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#days/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="diff/3">
+    <span class="signature"><strong>diff(t1, t2, type \\ :timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#diff/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Time interval between two timestamps. If the first timestamp comes before the
+second one in time, the return value will be negative. Timestamp must be in format
+{ megasecs, seconds, microseconds }.</p>
+<p>The third argument is an atom indicating the type of time units to return:
+microseconds (:usec), milliseconds (:msec), seconds (:sec), minutes (:min),
+or hours (:hour).</p>
+<p>When the third argument is omitted, the return value’s format is { megasecs,
+seconds, microsecs }.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="elapsed/2">
+    <span class="signature"><strong>elapsed(timestamp, type \\ :timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#elapsed/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Time interval between timestamp and now. If timestamp is after now in time, the
+return value will be negative. Timestamp must be in format { megasecs, seconds,
+microseconds }.</p>
+<p>The second argument is an atom indicating the type of time units to return:
+microseconds (:usec), milliseconds (:msec), seconds (:sec), minutes (:min),
+or hours (:hour).</p>
+<p>When the second argument is omitted, the return value’s format is { megasecs,
+seconds, microsecs }.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="elapsed/3">
+    <span class="signature"><strong>elapsed(arg1, arg2, type)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#elapsed/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="epoch/1">
+    <span class="signature"><strong>epoch(type \\ :timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#epoch/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Return time interval since the first day of year 0 to Epoch.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="from/2">
+    <span class="signature"><strong>from(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#from/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="hours/1">
+    <span class="signature"><strong>hours(value)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#hours/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="invert/1">
+    <span class="signature"><strong>invert(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#invert/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="measure/1">
+    <span class="signature"><strong>measure(fun)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#measure/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="measure/2">
+    <span class="signature"><strong>measure(fun, args)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#measure/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="measure/3">
+    <span class="signature"><strong>measure(module, fun, args)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#measure/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="mins/1">
+    <span class="signature"><strong>mins(value)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#mins/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="now/1">
+    <span class="signature"><strong>now(type \\ :timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#now/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Time interval since Epoch.</p>
+<p>The argument is an atom indicating the type of time units to return (see
+convert/2 for supported values).</p>
+<p>When the argument is omitted, the return value’s format is { megasecs, seconds, microsecs }.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="scale/2">
+    <span class="signature"><strong>scale(arg1, coef)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#scale/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="secs/1">
+    <span class="signature"><strong>secs(value)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#secs/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="sub/2">
+    <span class="signature"><strong>sub(arg1, arg2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#sub/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_12hour_clock/1">
+    <span class="signature"><strong>to_12hour_clock(hour)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_12hour_clock/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Converts an hour between 0..24 to {1..12, :am/:pm}</p>
+<h2>Examples</h2>
+<p>  iex&gt; to_12hour_clock(23)
+  {11, :pm}</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_24hour_clock/2">
+    <span class="signature"><strong>to_24hour_clock(hour, am_or_pm)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_24hour_clock/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Converts an hour between 1..12 in either am or pm, to value between 0..24</p>
+<h2>Examples</h2>
+<p>  iex&gt; to_24hour_clock(7, :pm)
+  19</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_days/1">
+    <span class="signature"><strong>to_days(timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_days/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_days/2">
+    <span class="signature"><strong>to_days(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_days/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_hours/1">
+    <span class="signature"><strong>to_hours(timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_hours/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_hours/2">
+    <span class="signature"><strong>to_hours(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_hours/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_mins/1">
+    <span class="signature"><strong>to_mins(timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_mins/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_mins/2">
+    <span class="signature"><strong>to_mins(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_mins/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_msecs/1">
+    <span class="signature"><strong>to_msecs(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_msecs/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_msecs/2">
+    <span class="signature"><strong>to_msecs(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_msecs/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_secs/1">
+    <span class="signature"><strong>to_secs(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_secs/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_secs/2">
+    <span class="signature"><strong>to_secs(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_secs/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_timestamp/2">
+    <span class="signature"><strong>to_timestamp(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_timestamp/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_usecs/1">
+    <span class="signature"><strong>to_usecs(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_usecs/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_usecs/2">
+    <span class="signature"><strong>to_usecs(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_usecs/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_weeks/1">
+    <span class="signature"><strong>to_weeks(timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_weeks/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_weeks/2">
+    <span class="signature"><strong>to_weeks(value, atom2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_weeks/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="weeks/1">
+    <span class="signature"><strong>weeks(value)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#weeks/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="zero/0">
+    <span class="signature"><strong>zero()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#zero/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    <p>Return a timestamp representing a time lapse of length 0.</p>
+<p>  Time.convert(Time.zero, :sec)
+  #=&gt; 0</p>
+<p>Can be useful for operations on collections of timestamps. For instance,</p>
+<p>  Enum.reduce timestamps, Time.zero, Time.add(&amp;1, &amp;2)</p>
+
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>

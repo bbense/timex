@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.Date</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.Date.html">Date</a></div>
+      <h1>
+        Timex.Date
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#types_details">Types</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Module for working with dates.</p>
+<p>Functions that produce time intervals use UNIX epoch (or simly Epoch) as the
+default reference date. Epoch is defined as UTC midnight of January 1, 1970.</p>
+<p>Time intervals in this module don’t account for leap seconds.</p>
+<p>Supported tasks:</p>
+<ul>
+<li>get current date in the desired time zone
+</li>
+<li>convert dates between time zones and time units
+</li>
+<li>introspect dates to find out weekday, week number, number of days in a given month, etc.
+</li>
+<li>parse dates from string
+</li>
+<li>compare dates
+</li>
+<li>date arithmetic
+</li>
+</ul>
+
+        </section>
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#add/2">add(date, arg2)</a></td>
+  
+    <td class="summary_synopsis"><p>Add time to a date using a timestamp, i.e. {megasecs, secs, microsecs}
+Same as shift(date, Time.to_timestamp(5, :mins), :timestamp)</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#century/1">century(datetime \\ Date.now())</a></td>
+  
+    <td class="summary_synopsis"><p>Given a date, get the century this date is in</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#compare/2">compare(date, date)</a></td>
+  
+    <td class="summary_synopsis"><p>Compare two dates returning one of the following values:</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#compare/3">compare(this, other, granularity)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#construct/2">construct(arg1, tz)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#convert/2">convert(date, type \\ :timestamp)</a></td>
+  
+    <td class="summary_synopsis"><p>Multi-purpose conversion function. Converts a date to the specified time
+interval since Epoch. If you’d like to specify year 0 as a reference date,
+use one of the to_* functions</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#day/1">day(date)</a></td>
+  
+    <td class="summary_synopsis"><p>Returns the ordinal day number of the date</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#day_name/1">day_name(x)</a></td>
+  
+    <td class="summary_synopsis"><p>Get the name of the day corresponding to the provided number</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#day_shortname/1">day_shortname(x)</a></td>
+  
+    <td class="summary_synopsis"><p>Get the short name of the day corresponding to the provided number</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#day_to_num/1">day_to_num(x)</a></td>
+  
+    <td class="summary_synopsis"><p>Get the day of the week corresponding to the given name</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#days_in_month/1">days_in_month(datetime)</a></td>
+  
+    <td class="summary_synopsis"><p>Return the number of days in the month which the date falls on</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#days_in_month/2">days_in_month(year, month)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#diff/3">diff(this, other, atom3)</a></td>
+  
+    <td class="summary_synopsis"><p>Calculate time interval between two dates. If the second date comes after the
+first one in time, return value will be positive; and negative otherwise.
+You must specify a granularity of any of</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#epoch/0">epoch()</a></td>
+  
+    <td class="summary_synopsis"><p>The date of Epoch, used as default reference date by this module
+and also by the Time module</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#epoch/1">epoch(atom1)</a></td>
+  
+    <td class="summary_synopsis"><p>Time interval since year 0 of Epoch expressed in the specified units</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#equal?/2">equal?(this, other)</a></td>
+  
+    <td class="summary_synopsis"><p>Determine if two dates represent the same point in time</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from/1">from(date)</a></td>
+  
+    <td class="summary_synopsis"><p>Construct a date from Erlang’s date or datetime value</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from/2">from(date, tz)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from/3">from(value, type, reference \\ :epoch)</a></td>
+  
+    <td class="summary_synopsis"><p>Construct a date from a time interval since Epoch or year 0</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from_iso_day/2">from_iso_day(day, date \\ nil)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert an iso ordinal day number to the day it represents in the
+current year. If no date is provided, a new one will be created, with
+the time will be set to 0:00:00, in UTC. Otherwise, the date provided will
+have it’s month and day reset to the date represented by the ordinal day</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#from_iso_triplet/1">from_iso_triplet(triplet)</a></td>
+  
+    <td class="summary_synopsis"><p>Given an ISO triplet <code class="inline">{year, week number, weekday}</code>, convert it to a
+DateTime struct</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#is_leap?/1">is_leap?(year)</a></td>
+  
+    <td class="summary_synopsis"><p>Return a boolean indicating whether the given year is a leap year. You may
+pase a date or a year number</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#is_valid?/1">is_valid?(datetime)</a></td>
+  
+    <td class="summary_synopsis"><p>Return a boolean indicating whether the given date is valid</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_triplet/1">iso_triplet(datetime)</a></td>
+  
+    <td class="summary_synopsis"><p>Return a 3-tuple {year, week number, weekday} for the given date</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#iso_week/1">iso_week(datetime)</a></td>
+  
+    <td class="summary_synopsis"><p>Return a pair {year, week number} (as defined by ISO 8601) that date falls
+on</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#local/0">local()</a></td>
+  
+    <td class="summary_synopsis"><p>Get current local date</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#local/1">local(date)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert a date to your local timezone</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#local/2">local(date, localtz)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert a date to a local date, using the provided timezone</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#month_name/1">month_name(x)</a></td>
+  
+    <td class="summary_synopsis"><p>Get the name of the month corresponding to the provided number</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#month_shortname/1">month_shortname(x)</a></td>
+  
+    <td class="summary_synopsis"><p>Get the short name of the month corresponding to the provided number</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#month_to_num/1">month_to_num(x)</a></td>
+  
+    <td class="summary_synopsis"><p>Get the number of the month corresponding to the given name</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#normalize/1">normalize(arg1)</a></td>
+  
+    <td class="summary_synopsis"><p>Produce a valid date from a possibly invalid one</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#now/0">now()</a></td>
+  
+    <td class="summary_synopsis"><p>Get current date</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#now/1">now(tz)</a></td>
+  
+    <td class="summary_synopsis"><p>Get representation of the current date in seconds or days since Epoch</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#set/2">set(date, options)</a></td>
+  
+    <td class="summary_synopsis"><p>Return a new date with the specified fields replaced by new values</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#shift/2">shift(date, spec)</a></td>
+  
+    <td class="summary_synopsis"><p>A single function for adjusting the date using various units: timestamp,
+seconds, minutes, hours, days, weeks, months, years</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#subtract/2">subtract(date, arg2)</a></td>
+  
+    <td class="summary_synopsis"><p>Subtract time from a date using a timestamp, i.e. {megasecs, secs, microsecs}
+Same as shift(date, Time.to_timestamp(5, :mins) |&gt; Time.invert, :timestamp)</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#timezone/0">timezone()</a></td>
+  
+    <td class="summary_synopsis"><p>Get a TimezoneInfo object for the specified offset or name</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#timezone/1">timezone(name)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#timezone/2">timezone(atom1, date)</a></td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_days/2">to_days(date, reference \\ :epoch)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert the date to an integer number of days since Epoch or year 0</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_secs/2">to_secs(date, reference \\ :epoch)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert a date to an integer number of seconds since Epoch or year 0</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#to_timestamp/2">to_timestamp(date, reference \\ :epoch)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert a date to a timestamp value consumable by the Time module</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#universal/0">universal()</a></td>
+  
+    <td class="summary_synopsis"><p>Get current the current datetime in UTC</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#universal/1">universal(date)</a></td>
+  
+    <td class="summary_synopsis"><p>Convert a date to UTC</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#weekday/1">weekday(datetime)</a></td>
+  
+    <td class="summary_synopsis"><p>Return weekday number (as defined by ISO 8601) of the specified date</p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#zero/0">zero()</a></td>
+  
+    <td class="summary_synopsis"><p>The first day of year zero (calendar module’s default reference date)</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+        <section id="types_details" class="details_list">
+          <h2>Types <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></h2>
+          <div class="type_detail">
+  <p class="typespec" id="t:dtz/0">
+    <a href="#t:dtz/0">dtz</a> :: {<a href="#t:datetime/0">datetime</a>, <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a>}
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:datetime/0">
+    <a href="#t:datetime/0">datetime</a> :: {<a href="#t:date/0">date</a>, <a href="#t:time/0">time</a>}
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:date/0">
+    <a href="#t:date/0">date</a> :: {<a href="#t:year/0">year</a>, <a href="#t:month/0">month</a>, <a href="#t:day/0">day</a>}
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:iso_triplet/0">
+    <a href="#t:iso_triplet/0">iso_triplet</a> :: {<a href="#t:year/0">year</a>, <a href="#t:weeknum/0">weeknum</a>, <a href="#t:weekday/0">weekday</a>}
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:year/0">
+    <a href="#t:year/0">year</a> :: non_neg_integer
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:month/0">
+    <a href="#t:month/0">month</a> :: 1 .. 12
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:day/0">
+    <a href="#t:day/0">day</a> :: 1 .. 31
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:daynum/0">
+    <a href="#t:daynum/0">daynum</a> :: 1 .. 366
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:weekday/0">
+    <a href="#t:weekday/0">weekday</a> :: 1 .. 7
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:weeknum/0">
+    <a href="#t:weeknum/0">weeknum</a> :: 1 .. 53
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:num_of_days/0">
+    <a href="#t:num_of_days/0">num_of_days</a> :: 28 .. 31
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:time/0">
+    <a href="#t:time/0">time</a> :: {<a href="#t:hour/0">hour</a>, <a href="#t:minute/0">minute</a>, <a href="#t:second/0">second</a>}
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:hour/0">
+    <a href="#t:hour/0">hour</a> :: 0 .. 23
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:minute/0">
+    <a href="#t:minute/0">minute</a> :: 0 .. 59
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:second/0">
+    <a href="#t:second/0">second</a> :: 0 .. 59
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:timestamp/0">
+    <a href="#t:timestamp/0">timestamp</a> :: {<a href="#t:megaseconds/0">megaseconds</a>, <a href="#t:seconds/0">seconds</a>, <a href="#t:microseconds/0">microseconds</a>}
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:megaseconds/0">
+    <a href="#t:megaseconds/0">megaseconds</a> :: non_neg_integer
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:seconds/0">
+    <a href="#t:seconds/0">seconds</a> :: non_neg_integer
+  </p>
+  
+</div>
+<div class="type_detail">
+  <p class="typespec" id="t:microseconds/0">
+    <a href="#t:microseconds/0">microseconds</a> :: non_neg_integer
+  </p>
+  
+</div>
+
+        </section>
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="add/2">
+    <span class="signature"><strong>add(date, arg2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#add/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>add(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, <a href="#t:timestamp/0">timestamp</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Add time to a date using a timestamp, i.e. {megasecs, secs, microsecs}
+Same as shift(date, Time.to_timestamp(5, :mins), :timestamp).</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="century/1">
+    <span class="signature"><strong>century(datetime \\ Date.now())</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#century/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>century(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a> | nil) :: non_neg_integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Given a date, get the century this date is in.</p>
+<h2>Example</h2>
+<p>  iex&gt; Date.century(Date.now)
+  21</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="compare/2">
+    <span class="signature"><strong>compare(date, date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#compare/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>compare(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a> | :epoch | :zero | :distant_past | :distant_future) :: -1 | 0 | 1</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Compare two dates returning one of the following values:</p>
+<ul>
+<li><code class="inline">-1</code> — the first date comes before the second one
+</li>
+<li><code class="inline">0</code>  — both arguments represent the same date when coalesced to the same timezone.
+</li>
+<li><code class="inline">1</code>  — the first date comes after the second one
+</li>
+</ul>
+<p>You can optionality specify a granularity of any of</p>
+<p>:years :months :weeks :days :hours :mins :secs :timestamp </p>
+<p>and the dates will be compared with the cooresponding accuracy. 
+The default granularity is :secs.</p>
+<h2>Examples</h2>
+<p>  Date.compare(date1,date2,:years)</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="compare/3">
+    <span class="signature"><strong>compare(this, other, granularity)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#compare/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>compare(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :years | :months | :weeks | :days | :hours | :mins | :secs | :timestamp) :: -1 | 0 | 1</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="construct/2">
+    <span class="signature"><strong>construct(arg1, tz)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#construct/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="convert/2">
+    <span class="signature"><strong>convert(date, type \\ :timestamp)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#convert/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>convert(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :secs | :days) :: integer</li>
+      
+        <li>convert(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :timestamp) :: <a href="#t:timestamp/0">timestamp</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Multi-purpose conversion function. Converts a date to the specified time
+interval since Epoch. If you’d like to specify year 0 as a reference date,
+use one of the to_* functions.</p>
+<h2>Examples</h2>
+<pre><code>date = Date.now
+Date.convert(date, :secs) + Date.epoch(:secs) == Date.to_secs(date, :zero)  #=&gt; true</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="day/1">
+    <span class="signature"><strong>day(date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#day/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>day(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: <a href="#t:daynum/0">daynum</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Returns the ordinal day number of the date.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="day_name/1">
+    <span class="signature"><strong>day_name(x)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#day_name/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>day_name(<a href="#t:weekday/0">weekday</a>) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get the name of the day corresponding to the provided number</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="day_shortname/1">
+    <span class="signature"><strong>day_shortname(x)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#day_shortname/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>day_shortname(<a href="#t:weekday/0">weekday</a>) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get the short name of the day corresponding to the provided number</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="day_to_num/1">
+    <span class="signature"><strong>day_to_num(x)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#day_to_num/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>day_to_num(binary | atom) :: integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get the day of the week corresponding to the given name.</p>
+<h2>Examples</h2>
+<p>  day_to_num(“Monday”)  =&gt; 1
+  day_to_num(“Mon”)     =&gt; 1
+  day_to_num(“monday”)  =&gt; 1
+  day_to_num(“mon”)     =&gt; 1
+  day_to_num(:mon)   =&gt; 1</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="days_in_month/1">
+    <span class="signature"><strong>days_in_month(datetime)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#days_in_month/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>days_in_month(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a> | {<a href="#t:year/0">year</a>, <a href="#t:month/0">month</a>}) :: <a href="#t:num_of_days/0">num_of_days</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Return the number of days in the month which the date falls on.</p>
+<h2>Examples</h2>
+<pre><code>Date.epoch |&gt; Date.days_in_month  #=&gt; 31</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="days_in_month/2">
+    <span class="signature"><strong>days_in_month(year, month)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#days_in_month/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="diff/3">
+    <span class="signature"><strong>diff(this, other, atom3)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#diff/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>diff(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :secs | :days | :weeks | :months | :years) :: integer</li>
+      
+        <li>diff(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :timestamp) :: <a href="#t:timestamp/0">timestamp</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Calculate time interval between two dates. If the second date comes after the
+first one in time, return value will be positive; and negative otherwise.
+You must specify a granularity of any of</p>
+<p>:years :months :weeks :days :hours :mins :secs :timestamp </p>
+<p>and the result will be an integer value of those units or a timestamp. </p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="epoch/0">
+    <span class="signature"><strong>epoch()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#epoch/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>epoch :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>The date of Epoch, used as default reference date by this module
+and also by the Time module.</p>
+<p>See also <a href="#zero/0"><code class="inline">zero/0</code></a>.</p>
+<h2>Examples</h2>
+<pre><code>Date.epoch |&gt; Date.to_secs #=&gt; 0</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="epoch/1">
+    <span class="signature"><strong>epoch(atom1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#epoch/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>epoch(:secs | :days) :: integer</li>
+      
+        <li>epoch(:timestamp) :: <a href="#t:timestamp/0">timestamp</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Time interval since year 0 of Epoch expressed in the specified units.</p>
+<h2>Examples</h2>
+<pre><code>epoch()        #=&gt; %DateTime{year: 1970, month: 1 ...}
+epoch(:secs)   #=&gt; 62167219200
+epoch(:days)   #=&gt; 719528</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="equal?/2">
+    <span class="signature"><strong>equal?(this, other)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#equal?/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>equal?(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: boolean</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Determine if two dates represent the same point in time</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="from/1">
+    <span class="signature"><strong>from(date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#from/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>from(<a href="#t:date/0">date</a> | <a href="#t:datetime/0">datetime</a>) :: <a href="#t:dtz/0">dtz</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Construct a date from Erlang’s date or datetime value.</p>
+<p>You may specify the date’s time zone as the second argument. If the argument
+is omitted, UTC time zone is assumed.</p>
+<p>When passing {year, month, day} as the first argument, the resulting date
+will indicate midnight of that day in the specified timezone (UTC by
+default).</p>
+<h2>Examples</h2>
+<pre><code>Date.from(:erlang.universaltime)             #=&gt; %DateTime{...}
+Date.from(:erlang.localtime)                 #=&gt; %Datetime{...}
+Date.from(:erlang.localtime, :local)         #=&gt; %DateTime{...}
+Date.from({2014,3,16}, Date.timezone(&quot;PST&quot;)) #=&gt; %DateTime{...}
+Date.from({2014,3,16}, &quot;PST&quot;)                #=&gt; %DateTime{...}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="from/2">
+    <span class="signature"><strong>from(date, tz)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#from/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>from(number, :secs | :days) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+        <li>from(<a href="#t:timestamp/0">timestamp</a>, :timestamp) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+        <li>from(<a href="#t:date/0">date</a> | <a href="#t:datetime/0">datetime</a>, :utc | :local | <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a> | binary) :: <a href="#t:dtz/0">dtz</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="from/3">
+    <span class="signature"><strong>from(value, type, reference \\ :epoch)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#from/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>from(number, :secs | :days, :epoch | :zero) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+        <li>from(<a href="#t:timestamp/0">timestamp</a>, :timestamp, :epoch | :zero) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Construct a date from a time interval since Epoch or year 0.</p>
+<p>UTC time zone is assumed. This assumption can be modified by setting desired
+time zone using set/3 after the date is constructed.</p>
+<h2>Examples</h2>
+<pre><code>Date.from(13, :secs)          #=&gt; %DateTime{...}
+Date.from(13, :days, :zero)   #=&gt; %DateTime{...}
+
+date = Date.from(Time.now, :timestamp) 
+|&gt; Date.set(:timezone, timezone(:local))      #=&gt; yields the same value as Date.now would</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="from_iso_day/2">
+    <span class="signature"><strong>from_iso_day(day, date \\ nil)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#from_iso_day/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>from_iso_day(non_neg_integer, <a href="#t:date/0">date</a> | nil) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert an iso ordinal day number to the day it represents in the
+current year. If no date is provided, a new one will be created, with
+the time will be set to 0:00:00, in UTC. Otherwise, the date provided will
+have it’s month and day reset to the date represented by the ordinal day.</p>
+<h2>Examples</h2>
+<pre><code>180 |&gt; Date.from_iso_day       #=&gt; %DateTime{year: 2014, month: 6, day: 7}
+180 |&gt; Date.from_iso_day(date) #=&gt; &lt;modified date struct where the month and day has been set appropriately&gt;</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="from_iso_triplet/1">
+    <span class="signature"><strong>from_iso_triplet(triplet)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#from_iso_triplet/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>from_iso_triplet(<a href="#t:iso_triplet/0">iso_triplet</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Given an ISO triplet <code class="inline">{year, week number, weekday}</code>, convert it to a
+DateTime struct.</p>
+<h2>Examples</h2>
+<pre><code>{2014, 5, 2} |&gt; Date.from_iso_triplet #=&gt; %DateTime{year: 2014, month: 2, day: 2}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="is_leap?/1">
+    <span class="signature"><strong>is_leap?(year)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#is_leap?/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>is_leap?(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a> | <a href="#t:year/0">year</a>) :: boolean</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Return a boolean indicating whether the given year is a leap year. You may
+pase a date or a year number.</p>
+<h2>Examples</h2>
+<pre><code>Date.epoch |&gt; Date.is_leap?  #=&gt; false
+Date.is_leap?(2012)          #=&gt; true</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="is_valid?/1">
+    <span class="signature"><strong>is_valid?(datetime)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#is_valid?/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>is_valid?(<a href="#t:dtz/0">dtz</a> | <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: boolean</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Return a boolean indicating whether the given date is valid.</p>
+<h2>Examples</h2>
+<pre><code>Date.from({1,1,1}, {1,1,1}) |&gt; Date.is_valid?           #=&gt; true
+Date.from({12,13,14}) |&gt; Date.is_valid?                 #=&gt; false
+Date.from({12,12,12, {-1,59,59}}) |&gt; Date.is_valid?     #=&gt; false
+{{12,12,12},{1,1,1}, Date.timezone()} |&gt; Date.is_valid? #=&gt; true</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_triplet/1">
+    <span class="signature"><strong>iso_triplet(datetime)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#iso_triplet/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>iso_triplet(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: {<a href="#t:year/0">year</a>, <a href="#t:weeknum/0">weeknum</a>, <a href="#t:weekday/0">weekday</a>}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Return a 3-tuple {year, week number, weekday} for the given date.</p>
+<h2>Examples</h2>
+<pre><code>Date.epoch |&gt; Date.iso_triplet  #=&gt; {1970, 1, 4}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="iso_week/1">
+    <span class="signature"><strong>iso_week(datetime)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#iso_week/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>iso_week(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: {<a href="#t:year/0">year</a>, <a href="#t:weeknum/0">weeknum</a>}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Return a pair {year, week number} (as defined by ISO 8601) that date falls
+on.</p>
+<h2>Examples</h2>
+<pre><code>Date.epoch |&gt; Date.iso_week  #=&gt; {1970,1}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="local/0">
+    <span class="signature"><strong>local()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#local/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>local :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get current local date.</p>
+<p>See also <a href="#universal/0"><code class="inline">universal/0</code></a>.</p>
+<h2>Examples</h2>
+<pre><code>Date.local #=&gt; %DateTime{year: 2013, month: 3, day: 16, hour: 11, minute: 1, second: 12, timezone: %TimezoneInfo{...}}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="local/1">
+    <span class="signature"><strong>local(date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#local/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>local(date :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert a date to your local timezone.</p>
+<p>See also <a href="#universal/1"><code class="inline">universal/1</code></a>.</p>
+<h2>Examples</h2>
+<pre><code>Date.now |&gt; Date.local</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="local/2">
+    <span class="signature"><strong>local(date, localtz)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#local/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>local(date :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, tz :: <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert a date to a local date, using the provided timezone</p>
+<h2>Examples</h2>
+<pre><code>Date.now |&gt; Date.local(timezone(:utc))</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="month_name/1">
+    <span class="signature"><strong>month_name(x)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#month_name/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>month_name(<a href="#t:month/0">month</a>) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get the name of the month corresponding to the provided number</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="month_shortname/1">
+    <span class="signature"><strong>month_shortname(x)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#month_shortname/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>month_shortname(<a href="#t:month/0">month</a>) :: binary</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get the short name of the month corresponding to the provided number</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="month_to_num/1">
+    <span class="signature"><strong>month_to_num(x)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#month_to_num/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>month_to_num(binary) :: integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get the number of the month corresponding to the given name.</p>
+<h2>Examples</h2>
+<p>  month_to_num(“January”) =&gt; 1
+  month_to_num(“Jan”)     =&gt; 1
+  month_to_num(“january”) =&gt; 1
+  month_to_num(“jan”)     =&gt; 1
+  month_to_num(:january)  =&gt; 1</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="normalize/1">
+    <span class="signature"><strong>normalize(arg1)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#normalize/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>normalize(<a href="#t:dtz/0">dtz</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Produce a valid date from a possibly invalid one.</p>
+<p>All date’s components will be clamped to the minimum or maximum valid value.</p>
+<h2>Examples</h2>
+<pre><code>{{1,13,44}, {-8,60,61}}
+|&gt; Date.normalize
+|&gt; Date.local #=&gt; DateTime[month: 12, day: 31, hour: 0, minute: 59, second: 59, ...]</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="now/0">
+    <span class="signature"><strong>now()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#now/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>now :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get current date.</p>
+<h2>Examples</h2>
+<pre><code>Date.now #=&gt; %DateTime{year: 2013, month: 3, day: 16, hour: 11, minute: 1, second: 12, timezone: %TimezoneInfo{...}}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="now/1">
+    <span class="signature"><strong>now(tz)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#now/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>now(:secs | :days) :: integer</li>
+      
+        <li>now(binary) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get representation of the current date in seconds or days since Epoch.</p>
+<p>See convert/2 for converting arbitrary dates to various time units.</p>
+<h2>Examples</h2>
+<pre><code>now(:secs)   #=&gt; 1363439013
+now(:days)   #=&gt; 15780</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="set/2">
+    <span class="signature"><strong>set(date, options)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#set/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>set(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, [{atom, term}]) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Return a new date with the specified fields replaced by new values.</p>
+<p>Values are automatically validated and clamped to good values by default. If
+you wish to skip validation, perhaps for performance reasons, pass <code class="inline">validate: false</code>.</p>
+<p>Values are applied in order, so if you pass <code class="inline">[datetime: dt, date: d]</code>, the date value
+from <code class="inline">date</code> will override <code class="inline">datetime</code>‘s date value.</p>
+<h2>Examples</h2>
+<pre><code>Date.now |&gt; Date.set(date: {1,1,1})                   #=&gt; DateTime[year: 1, month: 1, day: 1, ...]
+Date.now |&gt; Date.set(hour: 0)                         #=&gt; DateTime[hour: 0, ...]
+Date.now |&gt; Date.set([date: {1,1,1}, hour: 30])       #=&gt; DateTime[year: 1, month: 1, day: 1, hour: 23, ...]
+Date.now |&gt; Date.set([
+  datetime: {{1,1,1}, {0,0,0}}, date: {2,2,2}
+])                                                    #=&gt; DateTime[year: 2, month: 2, day: 2, ...]
+Date.now |&gt; Date.set([minute: 74, validate: false])   #=&gt; DateTime[minute: 74, ...]</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="shift/2">
+    <span class="signature"><strong>shift(date, spec)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#shift/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>shift(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, [{atom, term}]) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>A single function for adjusting the date using various units: timestamp,
+seconds, minutes, hours, days, weeks, months, years.</p>
+<p>When shifting by timestamps, microseconds are ignored.</p>
+<p>If the list contains <code class="inline">:month</code> and at least one other unit, an ArgumentError
+is raised (due to ambiguity of such shifts). You can still shift by months
+separately.</p>
+<p>If <code class="inline">:year</code> is present, it is applied in the last turn.</p>
+<p>The returned date is always valid. If after adding months or years the day
+exceeds maximum number of days in the resulting month, that month’s last day
+is used.</p>
+<p>To prevent day skew, fix up the date after shifting. For example, if you want
+to land on the last day of the next month, do the following:</p>
+<pre><code>shift(date, 1, :month) |&gt; set(:month, 31)</code></pre>
+<p>Since <code class="inline">set/3</code> is capping values that are out of range, you will get the
+correct last day for each month.</p>
+<h2>Examples</h2>
+<pre><code>date = from({{2013,3,5}, {23,23,23}})
+
+local(shift(date, secs: 24*3600*365))
+#=&gt; {{2014,3,5}, {23,23,23}}
+
+local(shift(date, secs: -24*3600*(365*2 + 1)))  # +1 day for leap year 2012
+#=&gt; {{2011,3,5}, {23,23,23}}
+
+local(shift(date, [secs: 13, day: -1, week: 2]))
+#=&gt; {{2013,3,18}, {23,23,36}}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="subtract/2">
+    <span class="signature"><strong>subtract(date, arg2)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#subtract/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>subtract(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, <a href="#t:timestamp/0">timestamp</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Subtract time from a date using a timestamp, i.e. {megasecs, secs, microsecs}
+Same as shift(date, Time.to_timestamp(5, :mins) |&gt; Time.invert, :timestamp).</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="timezone/0">
+    <span class="signature"><strong>timezone()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#timezone/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>timezone :: <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get a TimezoneInfo object for the specified offset or name.</p>
+<p>When offset or name is invalid, exception is raised.</p>
+<h2>Examples</h2>
+<pre><code>timezone()       #=&gt; &lt;local time zone&gt;
+timezone(:utc)   #=&gt; { 0.0, &quot;UTC&quot; }
+timezone(2)      #=&gt; { 2.0, &quot;EET&quot; }
+timezone(&quot;+2&quot;)   #=&gt; { 2.0, &quot;EET&quot; }
+timezone(&quot;EET&quot;)  #=&gt; { 2.0, &quot;EET&quot; }</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="timezone/1">
+    <span class="signature"><strong>timezone(name)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#timezone/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>timezone(:utc | number | binary) :: <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="timezone/2">
+    <span class="signature"><strong>timezone(atom1, date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#timezone/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>timezone(:local, <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a> | nil) :: <a href="Timex.TimezoneInfo.html#t:t/0">Timex.TimezoneInfo.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_days/2">
+    <span class="signature"><strong>to_days(date, reference \\ :epoch)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_days/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>to_days(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :epoch | :zero) :: integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert the date to an integer number of days since Epoch or year 0.</p>
+<p>See also <code class="inline">diff/2</code> if you want to specify an arbitray reference date.</p>
+<h2>Examples</h2>
+<pre><code>to_days(now())  #=&gt; 15780</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_secs/2">
+    <span class="signature"><strong>to_secs(date, reference \\ :epoch)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_secs/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>to_secs(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :epoch | :zero) :: integer</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert a date to an integer number of seconds since Epoch or year 0.</p>
+<p>See also <code class="inline">diff/2</code> if you want to specify an arbitrary reference date.</p>
+<h2>Examples</h2>
+<pre><code>Date.from({{1999, 1, 2}, {12,13,14}}) |&gt; Date.to_secs  #=&gt; 915279194</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="to_timestamp/2">
+    <span class="signature"><strong>to_timestamp(date, reference \\ :epoch)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#to_timestamp/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>to_timestamp(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>, :epoch | :zero) :: <a href="#t:timestamp/0">timestamp</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert a date to a timestamp value consumable by the Time module.</p>
+<p>See also <code class="inline">diff/2</code> if you want to specify an arbitrary reference date.</p>
+<h2>Examples</h2>
+<pre><code>Date.epoch |&gt; Date.to_timestamp #=&gt; {0,0,0}</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="universal/0">
+    <span class="signature"><strong>universal()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#universal/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>universal :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Get current the current datetime in UTC.</p>
+<p>See also <a href="#local/0"><code class="inline">local/0</code></a>.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="universal/1">
+    <span class="signature"><strong>universal(date)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#universal/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>universal(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Convert a date to UTC</p>
+<p>See also <a href="#local/1"><code class="inline">local/1</code></a>.</p>
+<h2>Examples</h2>
+<pre><code>Date.now |&gt; Date.universal</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="weekday/1">
+    <span class="signature"><strong>weekday(datetime)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#weekday/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>weekday(<a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a>) :: <a href="#t:weekday/0">weekday</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Return weekday number (as defined by ISO 8601) of the specified date.</p>
+<h2>Examples</h2>
+<pre><code>Date.epoch |&gt; Date.weekday  #=&gt; 4 (i.e. Thursday)</code></pre>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="zero/0">
+    <span class="signature"><strong>zero()</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#zero/0" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>zero :: <a href="Timex.DateTime.html#t:t/0">Timex.DateTime.t</a></li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>The first day of year zero (calendar module’s default reference date).</p>
+<p>See also <a href="#epoch/0"><code class="inline">epoch/0</code></a>.</p>
+<h2>Examples</h2>
+<pre><code>Date.zero |&gt; Date.to_secs #=&gt; 0</code></pre>
+
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>

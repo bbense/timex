@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timex.DateFormat.Formatters.StrftimeFormatter</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/elixir.css" type="text/css" media="screen" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <section id="content">
+      <div class="breadcrumbs">timex v0.13.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Timex.html">Timex</a> &rarr; <a href="Timex.DateFormat.html">DateFormat</a> &rarr; Formatters &rarr; <a href="Timex.DateFormat.Formatters.StrftimeFormatter.html">StrftimeFormatter</a></div>
+      <h1>
+        Timex.DateFormat.Formatters.StrftimeFormatter
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+      </ul>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>Date formatting language defined by the <code class="inline">strftime</code> function from the Standard
+C Library.</p>
+<p>This implementation in Elixir is mostly compatible with <code class="inline">strftime</code>. The
+exception is the absence of locale-depended results. All directives that imply
+textual result will produce English names and abbreviations.</p>
+<p>A complete reference of the directives implemented here is given below.</p>
+<h2>Directive format</h2>
+<p>A directive is marked by the percent sign (<code class="inline">%</code>) followed by one character
+(<code class="inline">&lt;directive&gt;</code>). In addition, a few optional specifiers can be inserted
+in-between:</p>
+<pre><code>%&lt;flag&gt;&lt;width&gt;&lt;modifier&gt;&lt;directive&gt;</code></pre>
+<p>Supported flags:</p>
+<ul>
+<li><code class="inline">-</code>       - don’t pad numerical results (overrides default padding if any)
+</li>
+<li><code class="inline">0</code>       - use zeros for padding
+</li>
+<li><code class="inline">_</code>       - use spaces for padding
+</li>
+<li><p><code class="inline">:</code>, <code class="inline">::</code> - used only in combination with <code class="inline">%z</code>; see description of <code class="inline">%:z</code></p>
+<pre><code>and `%::z` below</code></pre>
+</li>
+</ul>
+<p><code class="inline">&lt;width&gt;</code> is a non-negative decimal number specifying the minimum field
+width.</p>
+<p><code class="inline">&lt;modifier&gt;</code> can be <code class="inline">E</code> or <code class="inline">O</code>. These are locale-sensitive modifiers, and as
+such they are currently ignored by this implementation.</p>
+<h2>List of all directives</h2>
+<ul>
+<li><code class="inline">%%</code> - produces a single <code class="inline">%</code> in the output
+</li>
+</ul>
+<h3>Years and centuries</h3>
+<ul>
+<li><code class="inline">%Y</code> - full year number (0000..9999)
+</li>
+<li><code class="inline">%y</code> - the last two digits of the year number (00.99)
+</li>
+<li><code class="inline">%C</code> - century number (00..99)
+</li>
+<li><code class="inline">%G</code> - year number corresponding to the date’s ISO week (0..9999)
+</li>
+<li><code class="inline">%g</code> - year number (2 digits) corresponding to the date’s ISO week (0.99)
+</li>
+</ul>
+<h3>Months</h3>
+<ul>
+<li><code class="inline">%m</code> - month number (01..12)
+</li>
+<li><code class="inline">%b</code> - abbreviated month name (Jan..Dec, no padding)
+</li>
+<li><code class="inline">%h</code> - same is <code class="inline">%b</code>
+</li>
+<li><code class="inline">%B</code> - full month name (January..December, no padding)
+</li>
+</ul>
+<h3>Days, and days of week</h3>
+<ul>
+<li><code class="inline">%d</code> - day number (01..31)
+</li>
+<li><code class="inline">%e</code> - same as <code class="inline">%d</code>, but padded with spaces ( 1..31)
+</li>
+<li><code class="inline">%j</code> - ordinal day of the year (001..366)
+</li>
+<li><code class="inline">%u</code> - weekday, Monday first (1..7)
+</li>
+<li><code class="inline">%w</code> - weekday, Sunday first (0..6)
+</li>
+<li><code class="inline">%a</code> - abbreviated weekday name (Mon..Sun, no padding)
+</li>
+<li><code class="inline">%A</code> - full weekday name (Monday..Sunday, no padding)
+</li>
+</ul>
+<h3>Weeks</h3>
+<ul>
+<li><code class="inline">%V</code> - ISO week number (01..53)
+</li>
+<li><code class="inline">%W</code> - week number of the year, Monday first (00..53)
+</li>
+<li><code class="inline">%U</code> - week number of the year, Sunday first (00..53)
+</li>
+</ul>
+<h3>Time</h3>
+<ul>
+<li><code class="inline">%H</code> - hour of the day (00..23)
+</li>
+<li><code class="inline">%k</code> - same as <code class="inline">%H</code>, but padded with spaces ( 0..23)
+</li>
+<li><code class="inline">%I</code> - hour of the day (1..12)
+</li>
+<li><code class="inline">%l</code> - same as <code class="inline">%I</code>, but padded with spaces ( 1..12)
+</li>
+<li><code class="inline">%M</code> - minutes of the hour (0..59)
+</li>
+<li><code class="inline">%S</code> - seconds of the minute (0..60)
+</li>
+<li><code class="inline">%s</code> - number of seconds since UNIX epoch
+</li>
+<li><code class="inline">%P</code> - lowercase am or pm (no padding)
+</li>
+<li><code class="inline">%p</code> - uppercase AM or PM (no padding)
+</li>
+</ul>
+<h3>Time zones</h3>
+<ul>
+<li><code class="inline">%Z</code>   - time zone name, e.g. <code class="inline">UTC</code> (no padding)
+</li>
+<li><code class="inline">%z</code>   - time zone offset in the form <code class="inline">+0230</code> (no padding)
+</li>
+<li><code class="inline">%:z</code>  - time zone offset in the form <code class="inline">-07:30</code> (no padding)
+</li>
+<li><code class="inline">%::z</code> - time zone offset in the form <code class="inline">-07:30:00</code> (no padding)
+</li>
+</ul>
+<h3>Compound directives</h3>
+<ul>
+<li><code class="inline">%D</code> - same as <code class="inline">%m/%d/%y</code>
+</li>
+<li><code class="inline">%F</code> - same as <code class="inline">%Y-%m-%d</code>
+</li>
+<li><code class="inline">%R</code> - same as <code class="inline">%H:%M</code>
+</li>
+<li><code class="inline">%r</code> - same as <code class="inline">%I:%M:%S %p</code>
+</li>
+<li><code class="inline">%T</code> - same as <code class="inline">%H:%M:%S</code>
+</li>
+<li><code class="inline">%v</code> - same as <code class="inline">%e-%b-%Y</code>
+</li>
+</ul>
+
+        </section>
+      
+
+      
+
+      
+        <h2 id="summary">Summary<span class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></span></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#format!/2">format!(date, format_string)</a></td>
+  
+    <td class="summary_synopsis"><p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format!/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format!/2</code></a></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#format/2">format(date, format_string)</a></td>
+  
+    <td class="summary_synopsis"><p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format/2</code></a></p>
+</td>
+  
+</tr>
+<tr>
+  <td class="summary_signature"><a href="#tokenize/1">tokenize(format_string)</a></td>
+  
+    <td class="summary_synopsis"><p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#tokenize/1"><code class="inline">Timex.DateFormat.Formatters.Formatter.tokenize/1</code></a></p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <section id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <section class="detail">
+  <div class="detail_header" id="format/2">
+    <span class="signature"><strong>format(date, format_string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format(%Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: {:ok, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format/2</code></a>.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="format!/2">
+    <span class="signature"><strong>format!(date, format_string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#format!/2" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>format!(%Timex.DateTime{calendar: term, day: term, hour: term, minute: term, month: term, ms: term, second: term, timezone: term, year: term}, <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a> | no_return</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#format!/2"><code class="inline">Timex.DateFormat.Formatters.Formatter.format!/2</code></a>.</p>
+
+  </section>
+  
+</section>
+<section class="detail">
+  <div class="detail_header" id="tokenize/1">
+    <span class="signature"><strong>tokenize(format_string)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#tokenize/1" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+    <p>Specs:</p>
+    <ul class="spec">
+      
+        <li>tokenize(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: {:ok, [%Timex.Parsers.DateFormat.Directive{format: term, len: term, match: term, max: term, min: term, optional: term, pad: term, pad_type: term, raw: term, token: term, type: term, validate: term}]} | {:error, term}</li>
+      
+    </ul>
+  
+  <section class="docstring">
+    <p>Callback implementation of <a href="Timex.DateFormat.Formatters.Formatter.html#tokenize/1"><code class="inline">Timex.DateFormat.Formatters.Formatter.tokenize/1</code></a>.</p>
+
+  </section>
+  
+</section>
+
+        </section>
+      
+
+      
+
+      
+    </section>
+  </body>
+</html>
