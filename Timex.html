@@ -37,6 +37,274 @@
       </ul>
 
       
+        <section id="moduledoc" class="docstring">
+          <h2>Timex</h2>
+<p><a href="https://travis-ci.org/bitwalker/timex"><img src="https://travis-ci.org/bitwalker/timex.svg?branch=master" alt="Master"/></a>
+<a href="https://hex.pm/packages/timex"><img src="http://img.shields.io/hexpm/v/timex.svg?style=flat" alt="Hex.pm Version"/></a></p>
+<h2>Getting Started</h2>
+<p>To use timex with your projects, edit your mix.exs file and add it as a dependency:</p>
+<pre><code class="elixir">defp deps do
+  [{:timex, &quot;~&gt; 0.13.2&quot;}]
+end</code></pre>
+<p>To use Timex modules without the Timex namespace, add <code class="inline">use Timex</code> to the top of each module you plan on referencing Timex from. You can then reference the modules directly, for example: <code class="inline">Date.now()</code>, versus <code class="inline">Timex.Date.now()</code>. This is for compatibility with other libraries which might define their own Date/DateTime/Time implementations.</p>
+<h2>Overview</h2>
+<p>The goal of this project is to provide a complete set of Date/Time functionality for Elixir projects, with the hope of being eventually merged into the standard library.</p>
+<p>The <code class="inline">Date</code> module is for dealing with dates, which includes time and timezone information for those dates. It supports getting current date in any time zone, converting between timezones while taking Daylight Savings Time offsets into account, calculating time intervals between two dates, shifting a date by some amount of seconds/hours/days/years towards past and future, etc. As Erlang provides support only for the Gregorian calendar, that’s what timex currently supports, but it is possible to add additional calendars if needed.</p>
+<p>The <code class="inline">Time</code> module supports a finer grained level of arithmetic over time intervals. It is intended for use as timestamps in logs, measuring code execution times, converting time units, etc.</p>
+<h2>Usage</h2>
+<h3>Getting current date</h3>
+<p>Get current date in the local time zone.</p>
+<pre><code class="elixir">date = Date.local
+DateFormat.format!(date, &quot;{ISO}&quot;)      #=&gt; &quot;2013-09-30T16:40:08+0300&quot;
+DateFormat.format!(date, &quot;{RFC1123}&quot;)  #=&gt; &quot;Mon, 30 Sep 2013 16:40:08 EEST&quot;
+DateFormat.format!(date, &quot;%a, %d %m %Y %T %Z&quot;, :strftime) #=&gt; &quot;Mon, 30 09 2013 08:40:08 CDT&quot;
+DateFormat.format!(date, &quot;%Y&quot;, TimexFormatters.Strftime)  #=&gt; &quot;2013&quot;</code></pre>
+<p>The date value that <code class="inline">Date</code> produced encapsulates current date, time, and time zone information. This allows for great flexibility without any overhead on the user’s part.</p>
+<p>Since Erlang’s native date format doesn’t carry any time zone information, <code class="inline">Date</code> provides a bunch of constructors that take Erlang’s date value and an optional time zone.</p>
+<pre><code class="elixir">datetime = {{2013,3,17},{21,22,23}}
+
+date = Date.from(datetime)           # datetime is assumed to be in UTC by default
+DateFormat.format!(date, &quot;{RFC1123}&quot;)   #=&gt; &quot;Sun, 17 Mar 2013 21:22:23 GMT&quot;
+
+date = Date.from(datetime, &quot;CST&quot;)    # With a provided timezone
+
+date = Date.from(datetime, :local)   # indicates that datetime is in local time zone
+DateFormat.format!(date, &quot;{RFC1123}&quot;)   #=&gt; &quot;Sun, 17 Mar 2013 21:22:23 CST&quot;
+
+Date.local(date)  # convert date to local time zone (CST for our example)
+#=&gt; %DateTime{year: 2013, month: 3, day: 17, hour: 15, minute: 22, second: 23, timezone: ...}
+
+# Let's see what happens if we switch the time zone
+date = Timezone.convert(date, Timezone.get(&quot;EST&quot;))
+DateFormat.format!(date, &quot;{RFC1123}&quot;)
+#=&gt; &quot;Sun, 17 Mar 2013 17:22:23 EST&quot;
+
+Date.universal(date)  # convert date to UTC
+#=&gt; %DateTime{year: 2013, month: 3, day: 17, hour: 21, minute: 22, second: 23, timezone: ...}</code></pre>
+<h3>Working with time zones</h3>
+<pre><code class="elixir">date = Date.from({2013,1,1}, &quot;America/Chicago&quot;)
+DateFormat.format!(date, &quot;{ISO}&quot;)
+#=&gt; &quot;2013-01-01T00:00:00-0600&quot;
+DateFormat.format!(date, &quot;{ISOz}&quot;)
+#=&gt; &quot;2013-01-01T06:00:00Z&quot;
+
+DateFormat.format!(date, &quot;{RFC1123}&quot;)
+#=&gt; &quot;Tue, 01 Jan 2013 00:00:00 CST&quot;
+
+date = Date.now
+# Convert to UTC
+Date.universal(date)                        #=&gt; %DateTime{...}
+# Convert a date to local time
+Date.local(date)                            #=&gt; %DateTime{...}
+# Convert a date to local time, and provide the local timezone
+Date.local(date, Date.timezone(&quot;PST&quot;))      #=&gt; %DateTime{...}</code></pre>
+<h3>Extracting information about dates</h3>
+<p>Find out current weekday, week number, number of days in a given month, etc.</p>
+<pre><code class="elixir">date = Date.now
+DateFormat.format!(date, &quot;{RFC1123}&quot;)
+#=&gt; &quot;Wed, 26 Feb 2014 06:02:50 GMT&quot;
+
+Date.weekday(date)           #=&gt; 3
+Date.iso_week(date)          #=&gt; {2014, 9}
+Date.iso_triplet(date)       #=&gt; {2014, 9, 3}
+
+Date.days_in_month(date)     #=&gt; 28
+Date.days_in_month(2012, 2)  #=&gt; 29
+
+Date.is_leap?(date)           #=&gt; false
+Date.is_leap?(2012)           #=&gt; true
+
+Date.day_to_num(:mon)         #=&gt; 1
+Date.day_to_num(&quot;Thursday&quot;)   #=&gt; 4 (can use Thursday, thursday, Thu, thu, :thu)
+Date.day_name(4)              #=&gt; &quot;Thursday&quot;
+Date.day_shortname(4)         #=&gt; &quot;Thu&quot;
+
+Date.month_to_num(:apr)       #=&gt; 4 (same as day_to_num with possible formats)
+Date.month_name(4)            #=&gt; &quot;April&quot;
+Date.month_shortname(4)       #=&gt; &quot;Apr&quot;</code></pre>
+<h3>Date arithmetic</h3>
+<p><code class="inline">Date</code> can convert dates to time intervals since UNIX epoch or year 0. Calculating time intervals between two dates is possible via the <code class="inline">diff()</code> function (not implemented yet).</p>
+<pre><code class="elixir">date = Date.now
+DateFormat.format!(date, &quot;{RFC1123}&quot;)
+#=&gt; &quot;Mon, 30 Sep 2013 16:55:02 EEST&quot;
+
+Date.convert(date, :secs)  # seconds since Epoch
+#=&gt; 1380549302
+
+Date.to_secs(date, :zero)  # seconds since year 0
+#=&gt; 63547768502
+
+DateFormat.format!(Date.epoch(), &quot;{ISO}&quot;)
+#=&gt; &quot;1970-01-01T00:00:00+0000&quot;
+
+Date.epoch(:secs)  # seconds since year 0 to Epoch
+#=&gt; 62167219200
+
+date = Date.from(Date.epoch(:secs) + 144, :secs, :zero)  # :zero indicates year 0
+DateFormat.format!(date, &quot;{ISOz}&quot;)
+#=&gt; &quot;1970-01-01T00:02:24Z&quot;</code></pre>
+<h3>Shifting dates</h3>
+<p>Shifting refers to moving by some amount of time towards past or future. <code class="inline">Date</code> supports multiple ways of doing this.</p>
+<pre><code class="elixir">date = Date.now
+DateFormat.format!(date, &quot;{RFC1123}&quot;)
+#=&gt; &quot;Mon, 30 Sep 2013 16:58:13 EEST&quot;
+
+DateFormat.format!( Date.shift(date, secs: 78), &quot;{RFC1123}&quot; )
+#=&gt; &quot;Mon, 30 Sep 2013 16:59:31 EEST&quot;
+
+DateFormat.format!( Date.shift(date, secs: -1078), &quot;{RFC1123}&quot; )
+#=&gt; &quot;Mon, 30 Sep 2013 16:40:15 EEST&quot;
+
+DateFormat.format!( Date.shift(date, days: 1), &quot;{RFC1123}&quot; )
+#=&gt; &quot;Tue, 01 Oct 2013 16:58:13 EEST&quot;
+
+DateFormat.format!( Date.shift(date, weeks: 3), &quot;{RFC1123}&quot; )
+#=&gt; &quot;Mon, 21 Oct 2013 16:58:13 EEST&quot;
+
+DateFormat.format!( Date.shift(date, years: -13), &quot;{RFC1123}&quot; )
+#=&gt; &quot;Sat, 30 Sep 2000 16:58:13 EEST&quot;</code></pre>
+<h2>Formatting Dates</h2>
+<p>Formatting dates is pretty straightforward using the <code class="inline">DateFormat</code> module:</p>
+<pre><code class="elixir">date = Date.local
+
+# Format the date using the default formatter `TimexFormatters.Default`
+DateFormat.format!(date, &quot;{ISO}&quot;)      #=&gt; &quot;2013-09-30T16:40:08+0300&quot;
+
+# There are many different preformatted directives, see the formatter docs to get
+# a full breakdown of all options and directives available.
+DateFormat.format!(date, &quot;{RFC1123}&quot;)  #=&gt; &quot;Mon, 30 Sep 2013 16:40:08 EEST&quot;
+
+# Format the date using the strftime formatter `TimexFormatters.Strftime`
+DateFormat.format!(date, &quot;%a, %d %m %Y %T %Z&quot;, :strftime) #=&gt; &quot;Mon, 30 09 2013 08:40:08 CDT&quot;
+
+# There are shortcuts for timex's formatters (:default and :strftime), but under
+# the covers, those shorthand names are being converted to module names. You can
+# provide your own formatter implementation by creating a module with the name:
+# `Timex.DateFormat.Formatters.&lt;ModuleName&gt;Formatter`, with
+# `use Timex.DateFormat.Formatters.Formatter` which extends the `Formatter` behaviour.
+# See the docs for `Formatter` for more information.
+DateFormat.format!(date, &quot;%Y&quot;, TimexFormatters.Strftime)  #=&gt; &quot;2013&quot;</code></pre>
+<h2>Parsing Dates</h2>
+<p>Parsing dates is also a breeze with <code class="inline">DateFormat</code>:</p>
+<pre><code class="elixir"># Parse a date using the default parser
+gmt   = Date.timezone(&quot;GMT&quot;)
+date  = Date.from({{2013,3,5},{23,25,19}}, gmt)
+{:ok, ^date} = DateFormat.parse(&quot;Tue, 05 Mar 2013 23:25:19 GMT&quot;, &quot;{RFC1123}&quot;)
+
+# Any preformatted directive ending in `z` will shift the date to UTC/Zulu
+gmt   = Date.timezone(&quot;EET&quot;)
+date  = Date.from({{2013,3,5},{23,25,19}})
+{:ok, ^date} = DateFormat.parse(&quot;Tue, 05 Mar 2013 23:25:19 +0200&quot;, &quot;{RFC1123z}&quot;)
+
+# Simple date format, default parser
+date = Date.from({2013, 3, 5})
+{:ok, ^date} = DateFormat.parse(&quot;2013-03-05&quot;, &quot;{YYYY}-{0M}-{0D}&quot;)
+
+# Simple date format, strftime parser
+date = Date.from({2013, 3, 5})
+{:ok, ^date} = DateFormat.parse(&quot;2013-03-05&quot;, &quot;%Y-%m-%d&quot;)
+
+# Pluggable architecture, just provide your own parser module
+# named like `Timex.Parsers.DateFormat.&lt;Name&gt;Parser`, and which
+# contains `use Timex.Parsers.DateFormat.Parser` at the top. This
+# extends the `Parser` behavior, and will be validated by timex.
+date   = Date.from({2013, 3, 5})
+phrase = &quot;two days after the third of march, 2013&quot;
+format = &quot;{shift} {direction} {day}, {year}&quot;
+{:ok, ^date} = DateFormat.parse(phrase, format, MyHumanizedParser)</code></pre>
+<p>As seen above, like formatting, parsing also offers a plugin architecture. By extending
+<code class="inline">Parser</code>, and giving your custom parser the same namespace as the other parsers, timex
+will know that your parser can be used. Parsing is a complex topic, so if you have questions
+about it, please open an issue, or take a look at the Default and Strftime parsers. I hope to
+cover this topic in more detail in the future, so if you aren’t seeing anything, please ping
+me!</p>
+<h2>Working with Time module</h2>
+<p>The <code class="inline">Time</code> module already has some conversions and functionality for measuring time.</p>
+<pre><code class="elixir">## Time.now returns time since UNIX epoch
+
+Time.now
+#=&gt; {1362,781057,813380}
+
+Time.now(:secs)
+#=&gt; 1362781082.040016
+
+Time.now(:msecs)
+#=&gt; 1362781088623.741
+
+
+## Converting units is easy
+
+t = Time.now
+#=&gt; {1362,781097,857429}
+
+Time.to_usecs(t)
+#=&gt; 1362781097857429.0
+
+Time.to_secs(t)
+#=&gt; 1362781097.857429
+
+Time.to_secs(13, :hours)
+#=&gt; 46800
+
+Time.to_secs(13, :msecs)
+#=&gt; 0.013
+
+
+## We can also convert from timestamps to other units using a single function
+
+Time.convert(t, :secs)
+#=&gt; 1362781097.857429
+
+Time.convert(t, :mins)
+#=&gt; 22713018.297623817
+
+Time.convert(t, :hours)
+#=&gt; 378550.30496039696
+
+
+## elapsed() calculates time interval between now and t
+
+Time.elapsed(t)
+#=&gt; {0,68,-51450}
+
+Time.elapsed(t, :secs)
+#=&gt; 72.100247
+
+t1 = Time.elapsed(t)
+#=&gt; {0,90,-339935}
+
+
+## diff() calculates time interval between two timestamps
+
+Time.diff(t1, t)
+#=&gt; {-1362,-781007,-1197364}
+
+Time.diff(Time.now, t)
+#=&gt; {0,105,-300112}
+
+Time.diff(Time.now, t, :hours)
+#=&gt; 0.03031450388888889</code></pre>
+<h3>Converting time units</h3>
+<pre><code class="elixir">dt = Time.now
+Time.convert(dt, :secs)
+Time.convert(dt, :mins)
+Time.convert(dt, :hours)
+Time.to_timestamp(13, :secs)</code></pre>
+<h2>FAQ</h2>
+<p><strong>Which functions provide microsecond precision?</strong></p>
+<p>If you need to work with time intervals down to microsecond precision, you should take a look at the functions in the <code class="inline">Time</code> module. The <code class="inline">Date</code> module is designed for things like handling different time zones and working with dates separated by large intervals, so the minimum time unit it uses is seconds.</p>
+<p><strong>So how do I work with time intervals defined with microsecond precision?</strong></p>
+<p>Use functions from the <code class="inline">Time</code> module for time interval arithmetic.</p>
+<p><strong>How do I find the time interval between two dates?</strong></p>
+<p>Use <code class="inline">Date.diff</code> to obtain the number of seconds, minutes, hours, days, months, weeks, or years between two dates.</p>
+<p><strong>What is the support for time zones?</strong></p>
+<p>Full support for retreiving local timezone configuration on OSX, *NIX, and Windows, conversion to any timezone in the Olson timezone database, and full support for daylight savings time transitions.</p>
+<p>Timezone support is also exposed via the <code class="inline">Timezone</code>, <code class="inline">Timezone.Local</code>, and <code class="inline">Timezone.Dst</code> modules. Their functionality is exposed via the <code class="inline">Date</code> module’s API, and most common use cases shouldn’t need to access the <code class="inline">Timezone</code> namespace directly, but it’s there if needed.</p>
+<h2>License</h2>
+<p>This software is licensed under <a href="LICENSE.md">the MIT license</a>.</p>
+
+        </section>
+      
 
       
 
